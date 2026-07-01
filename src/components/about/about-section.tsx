@@ -4,7 +4,8 @@ import { Section } from "@/components/ui/section";
 
 export function AboutSection() {
     return (
-        <Section className="w-full bg-white">
+        <Section
+            id="sobre" className="w-full bg-white">
             <Container>
                 <h2 className="mb-16 text-center text-4xl font-bold text-[#3b1c61] sm:text-5xl">
                     O que é a Lótus Tech?
