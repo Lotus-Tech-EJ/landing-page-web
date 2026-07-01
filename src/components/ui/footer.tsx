@@ -32,7 +32,7 @@ export function Footer() {
                 <div className="flex flex-col items-center justify-center text-center max-w-[200px] sm:text-xs md:text-sm">
                     <p className="text-white leading-relaxed text-[9px] sm:text-sm md:text-lg">
                         &copy; {currentYear} Lotus Tech <br/>
-                        Todos os diretos reservados.
+                        Todos os direitos reservados.
                     </p>
                 </div>
             </Container>
