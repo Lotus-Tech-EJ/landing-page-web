@@ -7,7 +7,7 @@ export function HeroSection() {
     return (
         // 2. Trocamos a tag <section> nativa pelo seu componente <Section>
         // e removemos o "py-16 md:py-24" daqui
-        <Section className="w-full bg-[#6b4a9b] text-white">
+        <Section id="hero" className="w-full bg-[#6b4a9b] text-white">
             <Container>
 
                 <div className="mb-16 w-full text-center">
