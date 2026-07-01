@@ -6,15 +6,30 @@ import Image from "next/image";
 import { Container } from "../ui/container";
 import { Button } from "../ui/button";
 
-//arquivo logo
 import LogoHeader from "@/assets/LogoHorizontal.png";
 
 export function Header() {
-    // para menu mobile
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const headerRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLElement>(null);
 
-    // scroll suave
+    const navItems = [
+        { id: "hero", label: "Início" },
+        { id: "sobre", label: "Sobre Nós" },
+        { id: "servicos", label: "Portfólio" }
+    ];
+
+    const renderNavButton = (isMobile = false) =>
+        navItems.map((item) => (
+            <Button
+                key={item.id}
+                variant="navbar"
+                onClick={() => handleScroll(item.id)}
+                className={isMobile ? "w-full text-center" : ""}
+            >
+                {item.label}
+            </Button>
+        ));
+
     const handleScroll = (id: string) => {
         setIsMenuOpen(false);
         const element = document.getElementById(id);
@@ -41,8 +56,6 @@ export function Header() {
     return (
         <header ref={headerRef} className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white backdrop-blur-md">
             <Container className="flex h-20 items-center justify-between">
-
-                {/* Logo da barra */}
                 <div
                     className="flex items-center h-full cursor-pointer select-none"
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -55,71 +68,32 @@ export function Header() {
                     />
                 </div>
 
-                {/* menu */}
                 <nav className="hidden md:flex items-center gap-4">
-                    <Button
-                        variant="navbar"
-                        onClick={() => handleScroll("hero")}
-                    >
-                        Início
-                    </Button>
-                    <Button
-                        variant="navbar"
-                        onClick={() => handleScroll("sobre")}
-                    >
-                        Sobre Nós
-                    </Button>
-                    <Button
-                        variant="navbar"
-                        onClick={() => handleScroll("servicos")}
-                    >
-                        Portfólio
-                    </Button>
+                    {renderNavButton()}
                 </nav>
 
-                {/* abrir menu mobile */}
-                <button
+                <Button
+                    variant="iconNav"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 text-gray-600 md:hidden hover:bg-gray-50 transition-colors"
-                    aria-label="Toggle Menu"
-                >
-                    {isMenuOpen ? (
-                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    ) : (
-                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    )}
-                </button>
+                    className="md:hidden z-50"
+                    aria-label={isMenuOpen ? "Fechar Menu" : "Abrir Menu"}>
+
+                    <svg className="h-6 w-6 text-[#6b4a9b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+                        />
+                    </svg>
+
+                </Button>
             </Container>
 
-            {/*menu retratil */}
             {isMenuOpen && (
                 <div className="border-b border-gray-100 bg-white md:hidden animate-in fade-in slide-in-from-top-5 duration-200">
                     <nav className="flex flex-col p-4 gap-3">
-                        <Button
-                            variant="navbar"
-                            onClick={() => handleScroll("hero")}
-                            className="w-full text-center"
-                        >
-                            Início
-                        </Button>
-                        <Button
-                            variant="navbar"
-                            onClick={() => handleScroll("sobre")}
-                            className="w-full text-center"
-                        >
-                            Sobre Nós
-                        </Button>
-                        <Button
-                            variant="navbar"
-                            onClick={() => handleScroll("servicos")}
-                            className="w-full text-center"
-                        >
-                            Portfólio
-                        </Button>
+                        {renderNavButton()}
                     </nav>
                 </div>
             )}
